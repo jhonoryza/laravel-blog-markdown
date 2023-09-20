@@ -40,3 +40,4 @@ this is some collection nice articles about laravel framework
 - [Advanced Laravel: Contracts and Implementations](https://ashallendesign.co.uk/blog/advanced-laravel-contracts-and-implementations)
 - [Using `declare(strict_types=1)` for More Robust PHP Code](https://ashallendesign.co.uk/blog/using-declare-strict_types-1-for-more-robust-php-code)
 - [All the ways to handle null values in PHP](https://www.amitmerchant.com/all-the-ways-to-handle-null-values-in-php/)
+- [A practical example of using Fibers in PHP](https://www.amitmerchant.com/a-practical-example-of-using-fibers-in-php/)
