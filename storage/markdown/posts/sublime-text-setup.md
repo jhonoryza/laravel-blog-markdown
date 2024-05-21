@@ -132,3 +132,22 @@ buka `cmd + ,` / `alt + ,`
     }
 ]
 ```
+
+## Mouse bindings
+
+```json
+[
+    {
+        "button": "button1", 
+        "count": 1, 
+        "modifiers": ["super"],
+        "press_command": "drag_select",
+        "command": "lsp_symbol_definition"
+    },
+	{
+		"button": "button1", "count": 1, "modifiers": ["ctrl"],
+		"press_command": "drag_select",
+		"press_args": {"additive": true}
+	}
+]
+```
