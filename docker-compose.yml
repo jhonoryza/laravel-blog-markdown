@@ -1,0 +1,17 @@
+#version: "3"
+
+services:
+    laravel-blog-markdown:
+        image: "jhonoryza/laravel-blog-markdown:latest"
+        restart: unless-stopped
+        environment:
+            SERVER_NAME: ":80"
+        volumes:
+            - ./env:/app/.env
+            - ./default.Caddyfile:/etc/caddy/Caddyfile
+        networks:
+            - tunnel_default
+
+networks:
+    tunnel_default:
+        external: true
