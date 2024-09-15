@@ -6,6 +6,8 @@ services:
         restart: unless-stopped
         environment:
             SERVER_NAME: ":80"
+        env_file:
+            - .env
         volumes:
             - ./env:/app/.env
             - ./default.Caddyfile:/etc/caddy/Caddyfile
