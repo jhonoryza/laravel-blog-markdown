@@ -53,9 +53,6 @@ jobs:
         KEY_TYPE: id_rsa
         REMOTE_SHELL: 'bash'
         COMMAND: |
-          docker pull jhonoryza/laravel-blog-markdown:latest
-          cd /media/ubuntu/server_data/docker/laravel-projects/laravel-blog-markdown/src
-          git pull origin main
-          docker compose up -d
-          docker image prune -f
-          docker exec app php artisan optimize
+          /media/ubuntu/server_data/docker/laravel-projects/deploy-markdown-blog.sh &
+          SCRIPT_PID=$!
+          wait $SCRIPT_PID

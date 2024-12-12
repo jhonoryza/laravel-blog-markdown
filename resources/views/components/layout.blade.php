@@ -13,6 +13,21 @@
     <!-- Styles -->
     @vite('resources/css/app.css')
     @vite('resources/js/app.js')
+
+    @if (config('app.env') == 'production')
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-P8QWX3DER5"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+
+            gtag('config', 'G-P8QWX3DER5');
+        </script>
+    @endif
 </head>
 
 <body class="font-family-quicksand bg-slate-50 text-slate-600">

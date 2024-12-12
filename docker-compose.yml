@@ -4,13 +4,8 @@ services:
     laravel-blog-markdown:
         image: "jhonoryza/laravel-blog-markdown:latest"
         restart: unless-stopped
-        environment:
-            SERVER_NAME: ":80"
         env_file:
             - .env
-        volumes:
-            - ./env:/app/.env
-            - ./default.Caddyfile:/etc/caddy/Caddyfile
         networks:
             - tunnel_default
 

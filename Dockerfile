@@ -3,7 +3,11 @@ FROM jhonoryza/frankenphp-pgsql:8.2
 WORKDIR /app
 COPY . ./
 
-RUN composer install --optimize-autoloader --no-interaction --no-plugins --no-scripts --prefer-dist --no-dev
-RUN rm -rf /root/.composer
+# Install dependencies menggunakan Composer
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-plugins --no-scripts --prefer-dist
 
+RUN rm -rf /root/.composer
 RUN rm -rf ./git
+
+# Jalankan FrankenPHP
+ENTRYPOINT ["php", "artisan", "octane:frankenphp", "--host=0.0.0.0", "--port=80", "--workers=2", "--max-requests=1000"]
