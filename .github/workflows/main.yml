@@ -53,8 +53,13 @@ jobs:
         KEY_TYPE: id_rsa
         REMOTE_SHELL: 'bash'
         COMMAND: |
+          echo "Menjalankan deploy script di background..."
           /media/ubuntu/server_data/docker/laravel-projects/deploy-markdown-blog.sh &
           SCRIPT_PID=$!
+          
+          echo "Menunggu PID $SCRIPT_PID selesai..."
           while kill -0 $SCRIPT_PID 2>/dev/null; do
               sleep 1
           done
+
+          echo -e "\nProses selesai"
