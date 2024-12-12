@@ -40,26 +40,14 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: deploy
-      uses: Genesys225/cloudflared-service-token-ssh-proxy@V1
+    - name: Connect and run command on remote server
+      uses: and-fm/cloudflared-ssh-action@v3
       with:
-        HOST: dell.labkita.my.id
-        USER: ubuntu
-        PORT: 22
-        CLIENT_ID: ${{ secrets.CLIENT_ID }}
-        CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-        PUBLIC_KEY: ${{ secrets.SSH_PUBLIC_KEY }}
-        PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        KEY_TYPE: id_rsa
-        REMOTE_SHELL: 'bash'
-        COMMAND: |
-          echo "Menjalankan deploy script di background..."
-          /media/ubuntu/server_data/docker/laravel-projects/deploy-markdown-blog.sh &
-          SCRIPT_PID=$!
-          
-          echo "Menunggu PID $SCRIPT_PID selesai..."
-          while kill -0 $SCRIPT_PID 2>/dev/null; do
-              sleep 1
-          done
-
-          echo -e "\nProses selesai"
+        host: dell.labkita.my.id
+        username: ubuntu
+        private_key_filename: id_rsa
+        private_key_value: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: 22
+        service_token_id: ${{ secrets.CLIENT_ID }}
+        service_token_secret: ${{ secrets.CLIENT_SECRET }}
+        commands: /media/ubuntu/server_data/docker/laravel-projects/deploy-markdown-blog.sh
