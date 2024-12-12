@@ -55,4 +55,6 @@ jobs:
         COMMAND: |
           /media/ubuntu/server_data/docker/laravel-projects/deploy-markdown-blog.sh &
           SCRIPT_PID=$!
-          wait $SCRIPT_PID
+          while kill -0 $SCRIPT_PID 2>/dev/null; do
+              sleep 1
+          done
