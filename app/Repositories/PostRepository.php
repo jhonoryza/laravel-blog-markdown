@@ -79,7 +79,7 @@ class PostRepository
                 return Str::contains($post->slug, $slug);
             })
             ->first();
-        return $file ? $this->makePost($file) : null;
+        return $file ? $file : null;
     }
 
     public function searchPost(string $search): Collection
