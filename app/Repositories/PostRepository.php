@@ -76,7 +76,7 @@ class PostRepository
     {
         $file = $this->getPostCollection()
             ->filter(function (Post $post) use ($slug) {
-                return Str::contains($post->title, $slug);
+                return Str::contains($post->slug, $slug);
             })
             ->first();
         return $file ? $this->makePost($file) : null;
