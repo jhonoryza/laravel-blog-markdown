@@ -15,16 +15,8 @@ class PostDetailController extends Controller
      */
     public function __invoke(Request $request, string $slug, PostRepository $postRepository)
     {
-        $posts = session()->get('posts') ?? collect();
-        if ($posts->isEmpty()) {
-            return redirect()->route('home');
-        }
-
-        $post = $posts->firstWhere('slug', $slug);
-        if ($post === null) {
-            $post = $postRepository->findPost($slug);
-            if ($post === null)  abort(404);
-        }
+        $post = $postRepository->findPost($slug);
+        if ($post === null)  abort(404);
 
         return view('post-detail', compact('post'));
     }

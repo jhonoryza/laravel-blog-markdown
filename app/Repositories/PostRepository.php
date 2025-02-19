@@ -5,27 +5,52 @@ namespace App\Repositories;
 use App\Data\Post;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\MarkdownConverter;
+use Phiki\CommonMark\PhikiExtension;
+use Phiki\Theme\Theme;
 use SplFileInfo;
 
 class PostRepository
 {
-    public function getAllPosts(): Collection
+    public function getPostCollection(): Collection
     {
-        return collect(File::allFiles(storage_path('markdown/posts')))
+        $files = Cache::get('files');
+        if ($files != null && $files instanceof Collection) {
+            return $files;
+        }
+
+        $files = collect(File::allFiles(storage_path('markdown/posts')))
             ->filter(function (SplFileInfo $file) {
                 return $file->getExtension() === 'md';
             })
             ->map(function (SplFileInfo $file) {
                 return $this->makePost($file);
-            })
-            ->sortByDesc('date');
+            });
+
+        Cache::forever('files', $files);
+
+        return $files;
     }
 
     public function makePost(SplFileInfo $file): Post
     {
-        $content = Str::markdown(File::get($file->getPathname()), config('markdown'));
+        $environment = new Environment;
+        $environment
+            ->addExtension(new CommonMarkCoreExtension)
+            ->addExtension(new PhikiExtension(
+                theme: Theme::KanagawaWave,
+                withWrapper: true,
+            ));
+
+        $converter = new MarkdownConverter($environment);
+
+        $content = $converter->convert(File::get($file->getPathname()));
+        // $content = Str::markdown(File::get($file->getPathname()), config('markdown'));
         $title = Str::betweenFirst($content, "title: ", "\n");
         $title = Str::replace("'", "", $title);
         $date = Str::betweenFirst($content, "date: ", "</h2>");
@@ -41,17 +66,17 @@ class PostRepository
         );
     }
 
+    public function getAllPosts(): Collection
+    {
+        return $this->getPostCollection()
+            ->sortByDesc('date');
+    }
+
     public function findPost(string $slug): ?Post
     {
-        $file = collect(File::allFiles(storage_path('markdown/posts')))
-            ->filter(function (SplFileInfo $file) {
-                return $file->getExtension() === 'md';
-            })
-            ->filter(function (SplFileInfo $file) use ($slug) {
-                $content = Str::lower(Str::markdown(File::get($file->getPathname()), config('markdown')));
-                $title = Str::betweenFirst($content, "title: ", "\n");
-                $title = Str::slug(Str::replace("'", "", $title));
-                return Str::contains($title, $slug);
+        $file = $this->getPostCollection()
+            ->filter(function (Post $post) use ($slug) {
+                return Str::contains($post->title, $slug);
             })
             ->first();
         return $file ? $this->makePost($file) : null;
@@ -59,17 +84,10 @@ class PostRepository
 
     public function searchPost(string $search): Collection
     {
-        return collect(File::allFiles(storage_path('markdown/posts')))
-            ->filter(function (SplFileInfo $file) {
-                return $file->getExtension() === 'md';
-            })
-            ->filter(function (SplFileInfo $file) use ($search) {
-                $content = Str::lower(Str::markdown(File::get($file->getPathname()), config('markdown')));
-                $keyword = Str::lower(Str::title(str_replace('-', ' ', $search)));
-                return Str::contains($content, $keyword);
-            })
-            ->map(function (SplFileInfo $file) {
-                return $this->makePost($file);
+        return $this->getPostCollection()
+            ->filter(function (Post $post) use ($search) {
+                $keyword = Str::lower($search);
+                return Str::contains($post->content, $keyword) || Str::contains($post->title, $keyword);
             })
             ->sortByDesc('date');
     }

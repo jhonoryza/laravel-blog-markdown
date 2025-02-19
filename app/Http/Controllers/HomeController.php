@@ -22,8 +22,6 @@ class HomeController extends Controller
                 ->withQueryString();
         }
 
-        session()->put('posts', $posts);
-
         return view('welcome')->with(['posts' => $posts]);
     }
 }

@@ -20,6 +20,7 @@
         </a>
         <p class="mt-2 text-sm">{{ $post->date->format('d F Y') }}</p>
         <p class="mt-2">{{ $post->desc }}</p>
+        <div class="mt-2 prose max-w-none">{!! $post->content !!}</div>
     </div>
     @endforeach
 

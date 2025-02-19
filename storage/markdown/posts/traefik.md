@@ -9,20 +9,19 @@ Kali ini kita akan setup traefik sebagai reverse proxy menggunakan docker.
 
 - pertama buat file `docker-compose.yml` isinya seperti ini:
 
-```YAML
+```yml
 version: "3.3"
 
 services:
-
   traefik:
     image: "traefik:2.3.7"
     container_name: "traefik"
     # command:
-      #- "--log.level=DEBUG"
-      # - "--api.insecure=true"
-      # - "--providers.docker=true"
-      # - "--providers.docker.exposedbydefault=false"
-      # - "--entrypoints.web.address=:80"
+    #- "--log.level=DEBUG"
+    # - "--api.insecure=true"
+    # - "--providers.docker=true"
+    # - "--providers.docker.exposedbydefault=false"
+    # - "--entrypoints.web.address=:80"
     restart: unless-stopped
     environment:
       - TZ=Asia/Jakarta
@@ -63,11 +62,12 @@ networks:
     external: true
 ```
 
-- domain yang digunakan pada konfigurasi ini adalah `domain.site` silahkan ganti dengan domain yang dimiliki oleh teman2
+- domain yang digunakan pada konfigurasi ini adalah `domain.site` silahkan ganti
+  dengan domain yang dimiliki oleh teman2
 
 - buat file config/traefik.yaml
 
-```YAML
+```yml
 global:
   checkNewVersion: true
   sendAnonymousUsage: false
@@ -108,14 +108,18 @@ providers:
     watch: true
 ```
 
-- jalankan `docker-compose up -d` maka traefik bisa dibuka pada url `http://traefik.local.domain.site`
+- jalankan `docker-compose up -d` maka traefik bisa dibuka pada url
+  `http://traefik.local.domain.site`
 - tentunya dengan catatan domain tersebut sudah di daftarkan di dns server
 
 ## Optional
 
-jika kita membutuhkan reverse proxy ke service lain, misal service lain tsb berada di server yang berbeda, maka kita bisa menambahkan konfigurasi static di traefik, contohnya disini saya akan membuat file `config/config.yaml` dimana di sini kita akan mengarahkan ke server yang berbeda untuk aplikasi proxmox
+jika kita membutuhkan reverse proxy ke service lain, misal service lain tsb
+berada di server yang berbeda, maka kita bisa menambahkan konfigurasi static di
+traefik, contohnya disini saya akan membuat file `config/config.yaml` dimana di
+sini kita akan mengarahkan ke server yang berbeda untuk aplikasi proxmox
 
-```YAML
+```yml
 http:
   routers:
     proxmox-http:

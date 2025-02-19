@@ -6,12 +6,14 @@ date: '2023-08-10 14:58:00'
 Kali ini kita akan setup dns server menggunakan bind9.
 
 ## Syarat
+
 - sudah install [cloudflare dns over https](./cloudflare-dns-over-https)
 
 ## Mulai
+
 - buat file `docker-compose.yml`
 
-```YAML
+```yml
 version: "3"
 
 services:
@@ -37,7 +39,8 @@ networks:
     external: true
 ```
 
-kali ini kita akan menggunakan network yg sudah dipakai oleh container cloudflared
+kali ini kita akan menggunakan network yg sudah dipakai oleh container
+cloudflared
 
 - buat folder config
 - buat file baru config/named.conf
@@ -85,13 +88,18 @@ portainer      IN      A       192.168.18.106
 traefik        IN      A       192.168.18.106
 ```
 
-- ubah ip address `192.168.18.106` dengan ip address dimana bind9 ini akan di jalankan
+- ubah ip address `192.168.18.106` dengan ip address dimana bind9 ini akan di
+  jalankan
 - ubah `domainku.dev` dengan nama domain kesukaan kalian
 - jalankan `docker-compose up -d` atau `docker compose up -d`
 
-- matikan systemd-resolved.service dengan cara run `sudo systemctl stop systemd-resolved.service` dan disable `sudo systemctl disable systemd-resolved.service`
+- matikan systemd-resolved.service dengan cara run
+  `sudo systemctl stop systemd-resolved.service` dan disable
+  `sudo systemctl disable systemd-resolved.service`
 
-- arahkan device yg akan diubah dns nya ke alamat ip dimana service tersebut dijalankan, contohnya service diatas saya running di laptop/pc dengan ip: 192.168.18.106 maka ubah pengaturan DNS menggunakan ip 192.168.18.106
+- arahkan device yg akan diubah dns nya ke alamat ip dimana service tersebut
+  dijalankan, contohnya service diatas saya running di laptop/pc dengan ip:
+  192.168.18.106 maka ubah pengaturan DNS menggunakan ip 192.168.18.106
 
 ## testing dns
 

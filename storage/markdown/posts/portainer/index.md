@@ -6,12 +6,15 @@ date: '2023-08-05 16:30:00'
 Kali ini kita akan menjalankan `portainer` menggunakan `docker`.
 
 ## Syarat
-- sudah terinstall docker dan docker-compose. [referensi cara install](https://docs.docker.com/engine/install/)
+
+- sudah terinstall docker dan docker-compose.
+  [referensi cara install](https://docs.docker.com/engine/install/)
 
 ## Mulai
+
 1. pertama kita buat file `docker-compose.yml` masukan code seperti dibawah ini:
 
-```YAML
+```yml
 version: "3"
 services:
   portainer:

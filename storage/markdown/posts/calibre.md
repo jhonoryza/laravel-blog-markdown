@@ -6,12 +6,14 @@ date: '2023-08-10 14:58:00'
 Kali ini kita akan setup ebook library server menggunakan calibre.
 
 # Syarat
+
 - sudah install traefik di tutorial [berikut](./traefik)
 
 # Mulai
+
 - buat file `docker-compose.yaml` seperti ini
 
-```YAML
+```yml
 version: "3"
 services:
   calibre:
@@ -43,5 +45,5 @@ networks:
 ```
 
 - ubah domain `ebook.domain.com` dengan domain yang dimiliki
-- jalankan `docker-compose up -d` 
+- jalankan `docker-compose up -d`
 - calibre dapat di akses di domain tersebut

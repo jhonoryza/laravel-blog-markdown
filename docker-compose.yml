@@ -8,7 +8,10 @@ services:
             - .env
         networks:
             - tunnel_default
+            - redis_default
 
 networks:
     tunnel_default:
+        external: true
+    redis_default:
         external: true

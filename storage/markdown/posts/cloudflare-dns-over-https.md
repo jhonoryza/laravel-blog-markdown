@@ -6,9 +6,10 @@ date: '2023-08-09 06:00:00'
 Kali ini kita akan setup dns over https dari cloudflare.
 
 ## Mulai
+
 - buat file `docker-compose.yml`
 
-```YAML
+```yml
 version: "3"
 
 services:
@@ -19,9 +20,9 @@ services:
       - "5054:5054/tcp"
       - "5054:5054/udp"
     environment:
-        TZ: Asia/Jakarta
-        PORT: 5054
-        ADDRESS: 0.0.0.0
+      TZ: Asia/Jakarta
+      PORT: 5054
+      ADDRESS: 0.0.0.0
     restart: always
     networks:
       cloudflared_net:
@@ -32,8 +33,8 @@ networks:
     name: cloudflare_net
     driver: bridge
     ipam:
-     config:
-       - subnet: 10.0.0.0/29
+      config:
+        - subnet: 10.0.0.0/29
 ```
 
 - jalankan `docker compose up -d` atau `docker-compose up -d`

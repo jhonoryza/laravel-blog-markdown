@@ -10,7 +10,7 @@
 
         <h2 class="text-2xl font-bold ">{{ $post->title }}</h2>
         <p class="mt-2 ">{{ $post->date->format('d F Y') }}</p>
-        <div class="mt-2 prose prose-slate prose-sm max-w-none">{!! $post->content !!}</div>
+        <div class="mt-2 prose max-w-none">{!! $post->content !!}</div>
 
     </div>
 </x-layout>

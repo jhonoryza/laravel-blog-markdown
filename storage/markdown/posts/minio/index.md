@@ -3,15 +3,19 @@ title: 'Belajar Cara Install MinIO'
 date: '2023-08-05 15:00:00'
 ---
 
-Kali ini kita akan mempelajari cara install `MinIO` menggunakan `docker`, MinIo ini berperan mirip seperti `AWS S3`.
+Kali ini kita akan mempelajari cara install `MinIO` menggunakan `docker`, MinIo
+ini berperan mirip seperti `AWS S3`.
 
 ## Syarat
-- sudah terinstall docker dan docker-compose. [referensi cara install](https://docs.docker.com/engine/install/)
+
+- sudah terinstall docker dan docker-compose.
+  [referensi cara install](https://docs.docker.com/engine/install/)
 
 ## Mulai
+
 1. pertama kita buat file `docker-compose.yml` masukan code seperti dibawah ini:
 
-```YAML
+```yml
 version: "3.6"
 
 services:
@@ -41,4 +45,4 @@ services:
 2. jalankan perintah `docker compose up -d` atau `docker-compose up -d`
 3. lalu minio sudah bisa diakses pada url: http://localhost:9000
 4. username: admin, password: secret
-8. selesai
+5. selesai
