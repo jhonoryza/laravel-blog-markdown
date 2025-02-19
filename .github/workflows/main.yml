@@ -50,4 +50,4 @@ jobs:
         port: 22
         service_token_id: ${{ secrets.CLIENT_ID }}
         service_token_secret: ${{ secrets.CLIENT_SECRET }}
-        commands: /media/ubuntu/server_data/docker/laravel-projects/deploy-markdown-blog.sh
+        commands: /media/server_data/docker/laravel-projects/deploy-markdown-blog.sh
