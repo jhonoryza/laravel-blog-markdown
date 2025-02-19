@@ -44,7 +44,7 @@ jobs:
       uses: and-fm/cloudflared-ssh-action@v3
       with:
         host: dell.labkita.my.id
-        username: ubuntu
+        username: root
         private_key_filename: id_rsa
         private_key_value: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22
