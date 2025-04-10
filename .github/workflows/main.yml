@@ -17,13 +17,13 @@ jobs:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       run: |
           echo "${DOCKER_PASSWORD}" | docker login --username ${DOCKER_USERNAME} --password-stdin
-    
+
     - name: Set up Docker Buildx
       id: buildx
       uses: crazy-max/ghaction-docker-buildx@v1
       with:
           buildx-version: latest
-    
+
     - name: Build dockerfile (with push)
       run: |
           docker buildx build \
@@ -32,22 +32,22 @@ jobs:
           --file ./Dockerfile . \
           --tag jhonoryza/laravel-blog-markdown:latest
 
-  deploy:
-    needs: build-docker-image
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
-    - name: Connect and run command on remote server
-      uses: and-fm/cloudflared-ssh-action@v3
-      with:
-        host: dell.labkita.my.id
-        username: root
-        private_key_filename: id_rsa
-        private_key_value: ${{ secrets.SSH_PRIVATE_KEY }}
-        port: 22
-        service_token_id: ${{ secrets.CLIENT_ID }}
-        service_token_secret: ${{ secrets.CLIENT_SECRET }}
-        commands: /media/server_data/docker/laravel-projects/deploy-markdown-blog.sh
+  # deploy:
+  #   needs: build-docker-image
+  #   runs-on: ubuntu-latest
+  #
+  #   steps:
+  #   - name: Checkout repository
+  #     uses: actions/checkout@v4
+  #
+  #   - name: Connect and run command on remote server
+  #     uses: and-fm/cloudflared-ssh-action@v3
+  #     with:
+  #       host: dell.labkita.my.id
+  #       username: root
+  #       private_key_filename: id_rsa
+  #       private_key_value: ${{ secrets.SSH_PRIVATE_KEY }}
+  #       port: 22
+  #       service_token_id: ${{ secrets.CLIENT_ID }}
+  #       service_token_secret: ${{ secrets.CLIENT_SECRET }}
+  #       commands: /media/server_data/docker/laravel-projects/deploy-markdown-blog.sh
